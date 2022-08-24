@@ -10,7 +10,7 @@ switch_value = True
 class productClass:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1100x600+220+100")
+        self.root.geometry("1100x600+220+145")
         self.root.title("UA")
         self.root.config(bg="#333333")
         self.root.focus_force()
@@ -103,34 +103,41 @@ class productClass:
         cmb_status.current(0)
 
         # ====== Buttons ======
-        btn_add = Button(self.product_Frame, text="Save", font=("Agency FB", 15), bg="#0078D7",
-                         fg="white", cursor="hand2")
-        btn_add.place(x=10, y=400, width=100, height=40)
-        btn_add.bind("<Return>", self.add)
-        btn_add.bind("<ButtonRelease-1>", self.add)
+        self.addIcon = ImageTk.PhotoImage(file="images/add.png")
+        self.btn_add = Button(self.product_Frame, text="Add", image=self.addIcon, font=("Agency FB", 15),
+                              bg="#333333",
+                              fg="white",
+                              cursor="hand2", borderwidth=0, compound=TOP)
+        self.btn_add.place(x=30, y=380)
+        self.btn_add.bind("<Return>", self.add)
+        self.btn_add.bind("<ButtonRelease-1>", self.add)
 
-        btn_update = Button(self.product_Frame, text="Update", font=("Agency FB", 15),
-                            bg="#0078D7",
-                            fg="white",
-                            cursor="hand2")
-        btn_update.place(x=120, y=400, width=100, height=40)
-        btn_update.bind("<Return>", self.update)
-        btn_update.bind("<ButtonRelease-1>", self.update)
+        self.updateIcon = ImageTk.PhotoImage(file="images/update.png")
+        self.btn_update = Button(self.product_Frame, text="Update", image=self.updateIcon, font=("Agency FB", 15),
+                                 bg="#333333",
+                                 fg="white",
+                                 cursor="hand2", borderwidth=0, compound=TOP)
+        self.btn_update.place(x=140, y=380)
+        self.btn_update.bind("<Return>", self.update)
+        self.btn_update.bind("<ButtonRelease-1>", self.update)
 
-        btn_delete = Button(self.product_Frame, text="Delete", font=("Agency FB", 15),
-                            bg="#0078D7",
-                            fg="white",
-                            cursor="hand2")
-        btn_delete.place(x=230, y=400, width=100, height=40)
-        btn_delete.bind("<Return>", self.delete)
-        btn_delete.bind("<ButtonRelease-1>", self.delete)
+        self.deleteIcon = ImageTk.PhotoImage(file="images/delete.png")
+        self.btn_delete = Button(self.product_Frame, text="Delete", image=self.deleteIcon, font=("Agency FB", 15),
+                                 bg="#333333",
+                                 fg="white",
+                                 cursor="hand2", borderwidth=0, compound=TOP)
+        self.btn_delete.place(x=250, y=380)
+        self.btn_delete.bind("<Return>", self.delete)
+        self.btn_delete.bind("<ButtonRelease-1>", self.delete)
 
-        btn_clear = Button(self.product_Frame, text="Clear", font=("Agency FB", 15), bg="#0078D7",
-                           fg="white",
-                           cursor="hand2")
-        btn_clear.place(x=340, y=400, width=100, height=40)
-        btn_clear.bind("<Return>", self.clear)
-        btn_clear.bind("<ButtonRelease-1>", self.clear)
+        self.clearIcon = ImageTk.PhotoImage(file="images/clear.png")
+        self.btn_clear = Button(self.product_Frame, text="Clear All", image=self.clearIcon, font=("Agency FB", 15),
+                                bg="#333333",
+                                fg="white",
+                                cursor="hand2", borderwidth=0, compound=TOP)
+        self.btn_clear.place(x=350, y=370)
+        self.btn_clear.bind("<Return>", self.clear)
+        self.btn_clear.bind("<ButtonRelease-1>", self.clear)
 
         # ====== Search Frame ======
         self.SearchFrame = LabelFrame(self.root, text="Search Product", fg='white',
@@ -148,8 +155,10 @@ class productClass:
         txt_search = Entry(self.SearchFrame, textvariable=self.var_searchtxt, font=("goudy old style", 17),
                            bg="#3c3f41", fg='#F2F2F2', insertbackground='white').place(x=198, y=10, width=200)
 
-        btn_search = Button(self.SearchFrame, text="Search", command=self.search, font=("Agency FB", 17), bg="#0078D7",
-                            fg="white", bd=1, relief=RIDGE, cursor="hand2").place(x=410, y=9, width=150, height=34)
+        self.searchIcon = ImageTk.PhotoImage(file='images/search.png')
+        self.btn_search = Button(self.SearchFrame, text='Search', image=self.searchIcon, command=self.search, font=("goudy old style", 17),
+                                 bg="#333333", fg='#F2F2F2', activebackground='#333333', cursor="hand2", borderwidth=0, compound=LEFT)
+        self.btn_search.place(x=430, y=2)
 
         # ====== Product Details ======
         self.p_Frame = Frame(self.root, bg='white', bd=1)
@@ -188,7 +197,7 @@ class productClass:
         self.product_table["show"] = "headings"
 
         self.product_table.column("pid", width=80, minwidth=80)
-        self.product_table.column("category", width=100, minwidth=100)
+        self.product_table.column("category", width=120, minwidth=120)
         self.product_table.column("name", width=100, minwidth=100)
         self.product_table.column("price", width=100, minwidth=100)
         self.product_table.column("qty", width=100, minwidth=100)
@@ -234,6 +243,12 @@ class productClass:
             self.lbl_price.config(bg="#333333", fg="white", activebackground="#333333")
             self.lbl_qty.config(bg="#333333", fg="white", activebackground="#333333")
             self.lbl_status.config(bg="#333333", fg="white", activebackground="#333333")
+
+            self.btn_add.config(bg="#333333", fg='#F2F2F2', activebackground="#333333")
+            self.btn_update.config(bg="#333333", fg='#F2F2F2', activebackground="#333333")
+            self.btn_delete.config(bg="#333333", fg='#F2F2F2', activebackground="#333333")
+            self.btn_clear.config(bg="#333333", fg='#F2F2F2', activebackground="#333333")
+            self.btn_search.config(bg="#333333", fg='#F2F2F2', activebackground="#333333")
             switch_value = True
         else:
             self.themeBtn.config(image=self.light)
@@ -255,6 +270,12 @@ class productClass:
             self.lbl_price.config(bg="#F2F2F2", fg="black", activebackground="#F2F2F2")
             self.lbl_qty.config(bg="#F2F2F2", fg="black", activebackground="#F2F2F2")
             self.lbl_status.config(bg="#F2F2F2", fg="black", activebackground="#F2F2F2")
+
+            self.btn_add.config(bg="#F2F2F2", fg='#333333', activebackground="#F2F2F2")
+            self.btn_update.config(bg="#F2F2F2", fg='#333333', activebackground="#F2F2F2")
+            self.btn_delete.config(bg="#F2F2F2", fg='#333333', activebackground="#F2F2F2")
+            self.btn_clear.config(bg="#F2F2F2", fg='#333333', activebackground="#F2F2F2")
+            self.btn_search.config(bg="#F2F2F2", fg='#333333', activebackground="#F2F2F2")
             switch_value = False
 
     def fetch_cat_loc(self):
@@ -339,7 +360,7 @@ class productClass:
             self.var_qty.set(row[4])
             self.var_status.set(row[6])
             self.var_loc.set(row[7])
-        except:
+        except (Exception,):
             pass
 
     def update(self, e):

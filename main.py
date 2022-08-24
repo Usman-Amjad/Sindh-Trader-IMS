@@ -1,11 +1,12 @@
 from tkinter import *
 from tkinter import ttk
-from PIL import ImageTk
+from PIL import ImageTk, Image
 from product import productClass
 from category import categoryClass
 from locations import locationClass
 from billing import BillClass
 from returned_items import returnedItems
+from summary import allSummary
 
 switch_value = True
 
@@ -20,8 +21,12 @@ class stockManagement:
         style = ttk.Style(root)
 
         # ===== Background Image =====
-        self.bg = ImageTk.PhotoImage(file="images/bg.jpg")
-        self.bgImage = Label(self.root, image=self.bg).place(x=0, y=0, relwidth=1, relheight=1)
+        self.bgFrame = Frame(bg='blue')
+        self.bgFrame.place(y=123, height=670, relwidth=1)
+        self.bg = Image.open("images/bg.jpg")
+        self.bg = self.bg.resize((1920, 700), Image.ANTIALIAS)
+        self.bg = ImageTk.PhotoImage(self.bg)
+        self.bgImage = Label(self.bgFrame, image=self.bg).place(x=0, y=0, relwidth=1, relheight=1)
 
         # ===== Icon image =====
         icon = PhotoImage(file='images/logoB.png')
@@ -69,6 +74,11 @@ class stockManagement:
                                        font=("times new roman", 12, "bold"),
                                        bg=backgroundColor, fg=foregroundColor, bd=0, cursor="hand2")
         self.btnReturnedItems.place(x=400, y=0, width=85, height=30)
+
+        self.btnSummary = Button(self.lbl_menu, text="SUMMARY", command=self.summary,
+                                 font=("times new roman", 12, "bold"),
+                                 bg=backgroundColor, fg=foregroundColor, bd=0, cursor="hand2")
+        self.btnSummary.place(x=490, y=0, width=85, height=30)
 
         # ====== Dark or Light Mode ======
         self.light = ImageTk.PhotoImage(file="images/light-mode1.png")
@@ -137,6 +147,10 @@ class stockManagement:
     def returnedItem(self):
         self.new_win = Toplevel(self.root)
         self.new_obj = returnedItems(self.new_win)
+
+    def summary(self):
+        self.new_win = Toplevel(self.root)
+        self.new_obj = allSummary(self.new_win)
 
 
 if __name__ == "__main__":

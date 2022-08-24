@@ -10,7 +10,7 @@ switch_value = True
 class locationClass:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1100x500+200+130")
+        self.root.geometry("1100x500+200+145")
         self.root.title("ASB")
         self.root.config(bg="#333333")
         self.root.focus_force()
@@ -45,17 +45,23 @@ class locationClass:
         self.txtAddress = Entry(self.root, textvariable=self.address, font=("goudy old style", 18), bg="#F2F2F2")
         self.txtAddress.place(x=290, y=160, width=300)
 
-        btn_add = Button(self.root, text="ADD", font=("goudy old style", 15), bg="#0078D7",
-                         fg="white", cursor="hand2")
-        btn_add.place(x=280, y=210, width=150, height=35)
-        btn_add.bind("<Return>", self.add)
-        btn_add.bind("<ButtonRelease-1>", self.add)
+        self.addIcon = ImageTk.PhotoImage(file="images/add.png")
+        self.btn_add = Button(self.root, text="Add", image=self.addIcon, font=("Agency FB", 15),
+                              bg="#333333",
+                              fg="white",
+                              cursor="hand2", borderwidth=0, compound=TOP)
+        self.btn_add.place(x=350, y=210)
+        self.btn_add.bind("<Return>", self.add)
+        self.btn_add.bind("<ButtonRelease-1>", self.add)
 
-        btn_delete = Button(self.root, text="Delete", font=("goudy old style", 15), bg="#0078D7",
-                            fg="white", cursor="hand2")
-        btn_delete.place(x=440, y=210, width=150, height=35)
-        btn_delete.bind("<Return>", self.delete)
-        btn_delete.bind("<ButtonRelease-1>", self.delete)
+        self.deleteIcon = ImageTk.PhotoImage(file="images/delete.png")
+        self.btn_delete = Button(self.root, text="Delete", image=self.deleteIcon, font=("Agency FB", 15),
+                                 bg="#333333",
+                                 fg="white",
+                                 cursor="hand2", borderwidth=0, compound=TOP)
+        self.btn_delete.place(x=440, y=210)
+        self.btn_delete.bind("<Return>", self.delete)
+        self.btn_delete.bind("<ButtonRelease-1>", self.delete)
 
         # ====== Location Details ======
         loc_frame = Frame(self.root, bd=1, relief=RIDGE)
@@ -84,9 +90,9 @@ class locationClass:
 
         self.locationTable["show"] = "headings"
 
-        self.locationTable.column("lid", width=70)
-        self.locationTable.column("name", width=100)
-        self.locationTable.column("address", width=100)
+        self.locationTable.column("lid", width=60, minwidth=60)
+        self.locationTable.column("name", width=100, minwidth=100)
+        self.locationTable.column("address", width=100, minwidth=100)
 
         self.locationTable.pack(fill=BOTH, expand=1)
 
@@ -116,6 +122,8 @@ class locationClass:
             self.themeBtn.config(bg="#333333", activebackground="#333333")
             self.txt_name.config(bg="#F2F2F2", fg='black', insertbackground='black')
             self.txtAddress.config(bg="#F2F2F2", fg='black', insertbackground='black')
+            self.btn_add.config(bg="#333333", fg='#F2F2F2', activebackground="#333333")
+            self.btn_delete.config(bg="#333333", fg='#F2F2F2', activebackground="#333333")
 
             self.logo = ImageTk.PhotoImage(file="images/logoB.png")
             self.logoImage = Label(self.root, image=self.logo).place(x=5, y=5, width=120, height=80)
@@ -131,6 +139,8 @@ class locationClass:
             self.themeBtn.config(bg="#F2F2F2", activebackground="#F2F2F2")
             self.txt_name.config(bg="#3c3f41", fg='#F2F2F2', insertbackground='white')
             self.txtAddress.config(bg="#3c3f41", fg='#F2F2F2', insertbackground='white')
+            self.btn_add.config(bg="#F2F2F2", fg='#333333', activebackground="#F2F2F2")
+            self.btn_delete.config(bg="#F2F2F2", fg='#333333', activebackground="#F2F2F2")
 
             self.logo = ImageTk.PhotoImage(file="images/logoW.png")
             self.logoImage = Label(self.root, image=self.logo).place(x=5, y=5, width=120, height=80)
@@ -176,12 +186,15 @@ class locationClass:
         self.address.set("")
 
     def get_data(self, ev):
-        f = self.locationTable.focus()
-        content = (self.locationTable.item(f))
-        row = content['values']
-        self.var_loc_id.set(row[0])
-        self.var_name.set(row[1])
-        self.address.set(row[2])
+        try:
+            f = self.locationTable.focus()
+            content = (self.locationTable.item(f))
+            row = content['values']
+            self.var_loc_id.set(row[0])
+            self.var_name.set(row[1])
+            self.address.set(row[2])
+        except (Exception,):
+            pass
 
     def delete(self, e):
         con = sqlite3.connect(database=r'std.db')

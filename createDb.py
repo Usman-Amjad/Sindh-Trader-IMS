@@ -6,8 +6,8 @@ def stDatabase():
     cur = con.cursor()
 
     cur.execute(
-        "CREATE TABLE IF NOT EXISTS employee(eid INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT, gender TEXT,"
-        "contact TEXT)")
+        "CREATE TABLE IF NOT EXISTS employee(eid INTEGER PRIMARY KEY AUTOINCREMENT,name TEXT,email TEXT,gender TEXT,"
+        "contact TEXT,dob TEXT,doj TEXT,pass TEXT,utype TEXT,address TEXT,salary TEXT)")
     con.commit()
 
     cur.execute(

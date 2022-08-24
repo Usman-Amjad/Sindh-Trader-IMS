@@ -11,7 +11,7 @@ switch_value = True
 class returnedItems:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1100x600+220+100")
+        self.root.geometry("1100x600+220+145")
         self.root.title("UA")
         self.root.config(bg="#333333")
         self.root.focus_force()
@@ -233,7 +233,6 @@ class returnedItems:
 
         self.show()
 
-        # ========================================================================================
         # ====== Dark or Light Mode ======
         self.light = ImageTk.PhotoImage(file="images/light-mode1.png")
         self.dark = ImageTk.PhotoImage(file="images/dark-mode.png")
@@ -242,6 +241,7 @@ class returnedItems:
                                cursor="hand2")
         self.themeBtn.place(x=1000, y=30, width=80, height=30)
         self.themeBtn.bind("<ButtonRelease-1>", self.toggle)
+        # ========================================================================================
 
     def toggle(self, e):
         global switch_value
@@ -316,7 +316,7 @@ class returnedItems:
             self.customerPhone.set(row[9])
             self.returnDate.set(row[10])
             self.returnTime.set(row[11])
-        except:
+        except (Exception,):
             pass
 
     def update(self, e):
@@ -372,10 +372,12 @@ class returnedItems:
             messagebox.showerror("Error", f"Error due to : {str(ex)}", parent=self.root)
 
     def clear(self, e):
+        self.orderId.set("")
         self.var_name.set("")
         self.var_price.set("")
         self.var_qty.set("")
-        self.var_pid.set("")
+        self.totalPrice.set("")
+        self.NetPrice.set("")
         self.var_searchtxt.set("")
         self.var_searchby.set("Select")
 

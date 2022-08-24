@@ -10,7 +10,7 @@ switch_value = True
 class categoryClass:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1100x500+200+130")
+        self.root.geometry("1100x500+200+145")
         self.root.title("UA")
         self.root.config(bg="#333333")
         self.root.focus_force()
@@ -171,7 +171,7 @@ class categoryClass:
             row = content['values']
             self.var_cat_id.set(row[0])
             self.var_name.set(row[1])
-        except:
+        except (Exception,):
             pass
 
     def delete(self, e):
